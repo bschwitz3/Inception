@@ -1,26 +1,21 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
+#    create_user.sh                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/12 13:38:54 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/12 13:51:48 by bschwitz         ###   ########.fr        #
+#    Created: 2023/09/12 13:57:37 by bschwitz          #+#    #+#              #
+#    Updated: 2023/09/12 13:57:51 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:buster
+#!/bin/bash
 
-RUN apt-get update && apt-get install -y \
-	nginx \
-	openssl && \
-	rm -rf /var/lib/apt/lists/*
+service mysql start
 
-COPY ./conf/nginx.conf /etc/nginx/sites-available/default
-
-RUN openssl req -x509 -days 365 -nodes -newkey rsa:4096 \
-	-keyout /etc/ssl/private/nginx.key \
-	-out /etc/ssl/certs/nginx.crt -sha256 -subj "/CN=bschwitz.42.ch"
-
-CMD ["nginx", "-g", "daemon off;"]
+mysql -u root -e "CREATE DATABASE ${DB_NAME};"
+mysql -u root -e "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
+mysql -u root -e "FLUSH PRIVILEGES;"
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"

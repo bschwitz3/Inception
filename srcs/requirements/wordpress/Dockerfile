@@ -5,26 +5,35 @@
 #                                                     +:+ +:+         +:+      #
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/08/25 15:47:25 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/05 17:36:37 by bschwitz         ###   ########.fr        #
+#    Created: 2023/09/12 13:52:20 by bschwitz          #+#    #+#              #
+#    Updated: 2023/09/12 14:31:54 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:11
+FROM debian:buster
 
-SHELL ["/bin/bash", "-c"]
+EXPOSE 9000
 
-RUN apt-get update -yq
-RUN apt-get install php-fpm -yq
-RUN apt-get install php-mysql -yq
-RUN apt-get install mariadb-client -yq
-RUN apt-get install curl -yq
-RUN apt-get install vim -yq
-RUN apt-get install iputils-ping -yq
+RUN apt-get update && apt-get install -y \
+	php7.3-fpm \
+	php7.3-mysql \
+	mariadb-client \
+	curl && \
+	rm -rf /var/lib/apt/lists/*
 
-COPY conf/php.conf /etc/php/7.4/fpm/pool.d
-COPY tools/auto_config.sh .
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
-RUN chmod +x auto_config.sh
+# ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
-CMD ["bash", "auto_config.sh"]
+# RUN cd /var/www && tar -xvf latest.tar.gz && \
+# 	rm -rf latest.tar.gz
+
+# RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent
+
+# RUN chmod +x ./usr/bin/wp
+
+RUN mkdir /run/php
+
+COPY ./conf/config.sh /var/www/wordpress/config.sh
+RUN chmod +x /var/www/wordpress/config.sh
+CMD ["bash", "/var/www/wordpress/config.sh"]
