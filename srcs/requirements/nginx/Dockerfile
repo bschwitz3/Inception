@@ -6,7 +6,7 @@
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:38:54 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/12 13:51:48 by bschwitz         ###   ########.fr        #
+#    Updated: 2023/09/22 00:28:14 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,4 +23,4 @@ RUN openssl req -x509 -days 365 -nodes -newkey rsa:4096 \
 	-keyout /etc/ssl/private/nginx.key \
 	-out /etc/ssl/certs/nginx.crt -sha256 -subj "/CN=bschwitz.42.ch"
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

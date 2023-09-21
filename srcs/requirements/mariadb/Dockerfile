@@ -6,7 +6,7 @@
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:55:28 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/12 13:55:53 by bschwitz         ###   ########.fr        #
+#    Updated: 2023/09/22 00:28:15 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,14 +30,12 @@ COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d
 COPY tools/create_user.sh /
 RUN bash ./create_user.sh
 
-# RUN service mysql start && \
-# 	mysql < create_db_user.sql && \
 RUN rm -rf create_user.sh
 
-CMD ["mysqld_safe"]
+ENTRYPOINT	["mysqld_safe"]
 
 # test if you can connect to maridb database
-# sudo docker exec -it mariadb mariadb --user tblaase -proot
+# sudo docker exec -it mariadb mariadb --user bschwitz -proot
 # SHOW DATABASES;
 # USE wordpress;
-# SHOW TABLES
+# SHOW TABLES;
