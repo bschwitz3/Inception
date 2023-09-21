@@ -6,7 +6,7 @@
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:03:04 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/12 14:04:11 by bschwitz         ###   ########.fr        #
+#    Updated: 2023/09/22 00:41:12 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,11 +28,7 @@ up:
 	@mkdir -p ${DATA}${WP}
 	@printf "${_GREEN}Building images, creating and starting containers.\n${_RESET}"
 	@docker compose -f ${COMPOSE_FILE} up --build -d
-
-# --build -> build image before starting container
-# -d -> runs in detached mode so that we can still use the terminal after
-# --quiet-pull -> pull without progress information
-
+	
 down:
 	@printf "${_RED}Stopping containers and removing them.\n${_RESET}"
 	@docker compose -f ${COMPOSE_FILE} down
@@ -49,9 +45,9 @@ clean: down
 
 fclean: clean
 	@echo "Deleting image.."
-	@docker image rm ${NX}_i -f >/dev/null 2>&1
-	@docker image rm ${WP}_i -f >/dev/null 2>&1
-	@docker image rm ${MDB}_i -f >/dev/null 2>&1
+	@docker image rm ${NX} -f >/dev/null 2>&1
+	@docker image rm ${WP} -f >/dev/null 2>&1
+	@docker image rm ${MDB} -f >/dev/null 2>&1
 	@printf "${_RED}Clearing volume data: ${DATA}${MDB}.\n${_RESET}"
 	@rm -rf ${DATA}${MDB}
 	@printf "${_RED}Clearing volume data: ${DATA}${WP}.\n${_RESET}"
