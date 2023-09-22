@@ -9,7 +9,7 @@ services:
   mariadb:
     container_name: mariadb
     image: mariadb
-    build:
+    build: 
       context: ./requirements/mariadb
       args:
         - DB_NAME=${DB_NAME}
@@ -50,6 +50,24 @@ services:
       - mariadb
     restart: unless-stopped
 
+  # bonus
+  redis:
+    container_name: redis
+    image: redis
+    build: 
+      context: ./requirements/bonus/redis
+      args:
+        - WP_REDIS_HOST=${WP_REDIS_HOST}
+        - WP_REDIS_PORT=${WP_REDIS_PORT}
+        - WP_CACHE_KEY_SALT=${WP_CACHE_KEY_SALT}
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    volumes:
+      - redis_v:/data
+    restart: unless-stopped
+
 
 volumes:
   mariadb_v:
@@ -65,3 +83,11 @@ volumes:
       type: none
       o: bind
       device: /Users/bastien/data/wordpress
+
+  # bonus
+  redis_v:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/bastien/data/redis
