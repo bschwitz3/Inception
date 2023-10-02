@@ -8,9 +8,13 @@ Welcome to my Docker Infrastructure Project, a hands-on experience in system adm
 Key Steps:
 
 ∙ Project Setup: Organize files in 'srcs' folder, use provided Makefile.
+
 ∙ Service Containers: Create custom Docker images for NGINX, WordPress, and MariaDB.
+
 ∙ Data Management: Utilize volumes for WordPress data, establish Docker network.
+
 ∙ Configuration: Configure 'login.42.fr' domain, employ environment variables and .env file.
+
 ∙ Database Setup: Create two WordPress users, verify non-empty database.
 
 Summary:
