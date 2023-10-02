@@ -6,13 +6,12 @@
 #    By: bschwitz <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:55:28 by bschwitz          #+#    #+#              #
-#    Updated: 2023/09/22 00:28:15 by bschwitz         ###   ########.fr        #
+#    Updated: 2023/09/28 16:56:03 by bschwitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:buster
 
-#this exposes the port only to the other docker containers, but not to host
 EXPOSE 3306
 
 ARG DB_NAME=${DB_NAME}
@@ -34,7 +33,6 @@ RUN rm -rf create_user.sh
 
 ENTRYPOINT	["mysqld_safe"]
 
-# test if you can connect to maridb database
 # sudo docker exec -it mariadb mariadb --user bschwitz -proot
 # SHOW DATABASES;
 # USE wordpress;

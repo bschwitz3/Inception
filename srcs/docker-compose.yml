@@ -3,7 +3,7 @@ version: '3.5'
 
 
 networks:
-  inception: {}
+ inception: {}
 
 services:
   mariadb:
@@ -50,24 +50,6 @@ services:
       - mariadb
     restart: unless-stopped
 
-  # bonus
-  redis:
-    container_name: redis
-    image: redis
-    build: 
-      context: ./requirements/bonus/redis
-      args:
-        - WP_REDIS_HOST=${WP_REDIS_HOST}
-        - WP_REDIS_PORT=${WP_REDIS_PORT}
-        - WP_CACHE_KEY_SALT=${WP_CACHE_KEY_SALT}
-    networks:
-      - inception
-    depends_on:
-      - wordpress
-    volumes:
-      - redis_v:/data
-    restart: unless-stopped
-
 
 volumes:
   mariadb_v:
@@ -75,19 +57,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/bastien/data/mariadb
+      device: /home/bschwitz/data/mariadb
 
   wordpress_v:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/bastien/data/wordpress
-
-  # bonus
-  redis_v:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /Users/bastien/data/redis
+      device: /home/bschwitz/data/wordpress
