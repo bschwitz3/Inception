@@ -7,7 +7,7 @@ september 2023,
 
 Welcome to my Docker Infrastructure Project, a hands-on experience in system administration and Docker. This project is designed to enhance your Docker skills by setting up a multi-service infrastructure within a virtual machine. I've meticulously crafted custom Docker images for NGINX, WordPress, and MariaDB, all orchestrated with Docker Compose. Let's dive into the key steps!
 
-**Key Steps:**
+**Key Steps 🔑:**
 
 ∙ Project Setup: Organize files in 'srcs' folder, use provided Makefile.
 
